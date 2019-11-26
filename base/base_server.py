@@ -7,11 +7,10 @@ class Base_Server(object):
 
     def __init__(self, config):
         self._config = config
-        self.run(self._config)
 
-    def run(self,config):
+    def run(self):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.bind((config.get('Host'), int(config.get('Port'))))
+            s.bind((self._config.get('Host'), int(self._config.get('Port'))))
             s.listen()
             conn, addr = s.accept()
             with conn:
@@ -22,7 +21,9 @@ class Base_Server(object):
                         break
                     conn.sendall(data)
             
-
-
-
-
+    def send(self,msg):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect((self._config.get('Host'), int(self._config.get('Port'))))
+            s.send(b'Hello, world')
+            data = s.recv(1024)
+        print('Received', repr(data))

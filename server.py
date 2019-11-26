@@ -1,11 +1,9 @@
-import socket
-from base_server import Server
+from containers import Server, Configs
 
-class Socket_Server(Server):
-
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.bind((Server.HOST, Server.HOST))
-        s.listen()
-
-        conn, addr = s.accept()
-        Server.run(conn,addr)
+if __name__ == "__main__":
+     Configs.config.override({
+         "Host":"127.0.0.1",
+         "Port":"5555"
+     })
+     socket_server = Server.socket_server()
+     socket_server.run()

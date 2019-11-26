@@ -1,4 +1,4 @@
-from containers import Server, Configs
+from containers import Client, Configs
 
 if __name__ == "__main__":
      Configs.config.override({
@@ -6,4 +6,5 @@ if __name__ == "__main__":
          "Port":"5555"
      })
 
-     socket_server = Server.socket_server()
+     socket_client = Client.socket_client()
+     socket_client.send('test')
