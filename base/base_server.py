@@ -1,21 +1,19 @@
 import socket
 
-
-
-class Server(object):
+class Base_Server(object):
     """
         Base Server class
     """
-    Host ='127.0.0.1'
-    PORT ='5555'
 
-    
+    def __init__(self, config):
+        self._config = config
+        self.run(self._config)
 
-    def run(conn,addr):
+    def run(self,config):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.bind((Server.HOST, Server.HOST))
-        s.listen()
-        conn, addr = s.accept()
+            s.bind((config.get('Host'), int(config.get('Port'))))
+            s.listen()
+            conn, addr = s.accept()
             with conn:
                 print('Connected by', addr)
                 while True:
@@ -23,7 +21,7 @@ class Server(object):
                     if not data:
                         break
                     conn.sendall(data)
-        
+            
 
 
 
