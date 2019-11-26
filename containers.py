@@ -9,4 +9,4 @@ class Server(containers.DeclarativeContainer):
     socket_server = providers.Singleton(Base_Server,Configs.config)
 
 class Client(containers.DeclarativeContainer):
-    socket_client = providers.Singleton(Base_Server,Configs.config)
+    socket_client = providers.Factory(Base_Client,Server.socket_server)

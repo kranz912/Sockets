@@ -12,18 +12,17 @@ class Base_Server(object):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind((self._config.get('Host'), int(self._config.get('Port'))))
             s.listen()
-            conn, addr = s.accept()
-            with conn:
-                print('Connected by', addr)
-                while True:
-                    data = conn.recv(1024)
-                    if not data:
-                        break
-                    conn.sendall(data)
+            while True:
+                conn, addr = s.accept()
+                with conn:
+                    while True:
+                        data = conn.recv(1024)
+                        if not data:
+                            break
+                        print("Message from {} : {}".format(addr, repr(data)))
             
     def send(self,msg):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self._config.get('Host'), int(self._config.get('Port'))))
-            s.send(b'Hello, world')
-            data = s.recv(1024)
-        print('Received', repr(data))
+            b_msg = bytes(msg,encoding='utf-8')
+            s.send(b_msg)
