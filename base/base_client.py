@@ -11,7 +11,7 @@ class Base_Client(object):
     def run(self):
         msg = None
         while True:
-            print("address:" end=)
+            print("address:" end='')
             rece = input()
             print("message :" end='')
             msg = input()
