@@ -21,8 +21,8 @@ class Base_Server(object):
                             break
                         print("Message from {} : {}".format(addr, repr(data)))
             
-    def send(self,msg):
+    def send(self,receiver,msg):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.connect((self._config.get('Host'), int(self._config.get('Port'))))
+            s.connect((receiver, int(self._config.get('Port'))))
             b_msg = bytes(msg,encoding='utf-8')
             s.send(b_msg)
